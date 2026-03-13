@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { useTheme } from '../../context/ThemeContext'
-import { skills } from '../../data/projects'
+import { skills, skillStyleMap } from '../../data/projects'
 
 const sectionVariants = {
   hidden: { opacity: 0 },
@@ -18,6 +18,7 @@ function BowlingBallSkill({ skill, index }: { skill: typeof skills[0]; index: nu
   const [isHovered, setIsHovered] = useState(false)
   const sizes = [80, 76, 82, 74, 78, 80]
   const size = sizes[index % sizes.length]
+  const { color } = skillStyleMap[skill.colorKey]
 
   return (
     <motion.div
@@ -30,6 +31,10 @@ function BowlingBallSkill({ skill, index }: { skill: typeof skills[0]; index: nu
       role="button"
       tabIndex={0}
       aria-label={`${skill.name} skill`}
+      onKeyDown={e => {
+        if (e.key === 'Enter') { setIsHovered(true) }
+        if (e.key === ' ') { e.preventDefault(); setIsHovered(v => !v) }
+      }}
     >
       {/* Ball */}
       <motion.div
@@ -37,9 +42,9 @@ function BowlingBallSkill({ skill, index }: { skill: typeof skills[0]; index: nu
         style={{
           width: size,
           height: size,
-          background: `radial-gradient(circle at 35% 35%, ${lightenColor(skill.color)}, ${skill.color} 60%, ${darkenColor(skill.color)} 100%)`,
+          background: `radial-gradient(circle at 35% 35%, ${lightenColor(color)}, ${color} 60%, ${darkenColor(color)} 100%)`,
           boxShadow: isHovered
-            ? `0 8px 24px ${skill.color}88, inset -4px -4px 10px rgba(0,0,0,0.4), inset 3px 3px 6px rgba(255,255,255,0.25)`
+            ? `0 8px 24px ${color}88, inset -4px -4px 10px rgba(0,0,0,0.4), inset 3px 3px 6px rgba(255,255,255,0.25)`
             : `0 4px 12px rgba(0,0,0,0.3), inset -4px -4px 10px rgba(0,0,0,0.4), inset 3px 3px 6px rgba(255,255,255,0.2)`,
         }}
         animate={isHovered ? { rotate: [0, -5, 5, 0] } : {}}
@@ -86,6 +91,7 @@ function BowlingBallSkill({ skill, index }: { skill: typeof skills[0]; index: nu
 
 // Business Mode: Badge
 function SkillBadge({ skill }: { skill: typeof skills[0] }) {
+  const { color } = skillStyleMap[skill.colorKey]
   return (
     <motion.div
       variants={itemVariants}
@@ -95,7 +101,7 @@ function SkillBadge({ skill }: { skill: typeof skills[0] }) {
     >
       <div
         className="w-3 h-3 rounded-full flex-shrink-0"
-        style={{ backgroundColor: skill.color }}
+        style={{ backgroundColor: color }}
         aria-hidden="true"
       />
       <span className="font-business font-medium text-gray-700 text-sm">
@@ -106,8 +112,20 @@ function SkillBadge({ skill }: { skill: typeof skills[0] }) {
 }
 
 // Color helpers
+function normalizeHex(hex: string): string | null {
+  const short = /^#([A-Fa-f0-9]{3})$/.exec(hex)
+  if (short) {
+    const [, h] = short
+    return `#${h[0]}${h[0]}${h[1]}${h[1]}${h[2]}${h[2]}`
+  }
+  if (/^#[A-Fa-f0-9]{6}$/.test(hex)) return hex
+  return null
+}
+
 function lightenColor(hex: string): string {
-  const num = parseInt(hex.slice(1), 16)
+  const normalized = normalizeHex(hex)
+  if (!normalized) return hex
+  const num = parseInt(normalized.slice(1), 16)
   const r = Math.min(255, (num >> 16) + 60)
   const g = Math.min(255, ((num >> 8) & 0xff) + 60)
   const b = Math.min(255, (num & 0xff) + 60)
@@ -115,7 +133,9 @@ function lightenColor(hex: string): string {
 }
 
 function darkenColor(hex: string): string {
-  const num = parseInt(hex.slice(1), 16)
+  const normalized = normalizeHex(hex)
+  if (!normalized) return hex
+  const num = parseInt(normalized.slice(1), 16)
   const r = Math.max(0, (num >> 16) - 40)
   const g = Math.max(0, ((num >> 8) & 0xff) - 40)
   const b = Math.max(0, (num & 0xff) - 40)

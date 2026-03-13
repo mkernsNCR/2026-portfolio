@@ -1,3 +1,5 @@
+import type { ThemeTokens } from './types'
+
 export const funTheme = {
   // Layout
   pageBackground: 'bg-gradient-to-b from-sky-400 via-sky-300 to-sky-200',
@@ -32,4 +34,4 @@ export const funTheme = {
   // Misc
   divider: 'border-white/30',
   badge: 'bg-white/20 text-white font-wii text-sm px-3 py-1 rounded-full border border-white/30',
-} as const
+} as const satisfies ThemeTokens

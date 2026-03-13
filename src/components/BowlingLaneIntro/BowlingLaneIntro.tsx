@@ -43,10 +43,11 @@ function BowlingPin({ position, fallen, delay }: {
 
   useEffect(() => {
     if (fallen && !hasAnimated) {
-      setTimeout(() => {
+      const timeoutId = setTimeout(() => {
         targetRotation.current = Math.PI / 2 + (Math.random() * 0.4 - 0.2)
         setHasAnimated(true)
       }, delay)
+      return () => clearTimeout(timeoutId)
     }
   }, [fallen, delay, hasAnimated])
 
@@ -160,20 +161,28 @@ export default function BowlingLaneIntro({ onComplete }: BowlingLaneIntroProps) 
   const [phase, setPhase] = useState<'idle' | 'rolling' | 'strike' | 'fading'>('idle')
   const [pinsDown, setPinsDown] = useState(false)
   const [visible, setVisible] = useState(true)
+  const timeoutsRef = useRef<ReturnType<typeof setTimeout>[]>([])
 
   useEffect(() => {
     const t1 = setTimeout(() => setPhase('rolling'), 800)
     return () => clearTimeout(t1)
   }, [])
 
+  useEffect(() => {
+    return () => {
+      timeoutsRef.current.forEach(id => clearTimeout(id))
+    }
+  }, [])
+
   const handlePinsHit = () => {
     setPinsDown(true)
-    setTimeout(() => setPhase('strike'), 500)
-    setTimeout(() => setPhase('fading'), 2200)
-    setTimeout(() => {
+    const t1 = setTimeout(() => setPhase('strike'), 500)
+    const t2 = setTimeout(() => setPhase('fading'), 2200)
+    const t3 = setTimeout(() => {
       setVisible(false)
       onComplete()
     }, 3200)
+    timeoutsRef.current = [t1, t2, t3]
   }
 
   return (
@@ -258,8 +267,13 @@ export default function BowlingLaneIntro({ onComplete }: BowlingLaneIntroProps) 
 
           {/* Skip button */}
           <button
+            type="button"
             className="absolute bottom-6 right-6 text-white/50 hover:text-white/90 text-sm font-wii transition-colors px-4 py-2 rounded-full border border-white/20 hover:border-white/50"
-            onClick={() => { setVisible(false); onComplete() }}
+            onClick={() => {
+              timeoutsRef.current.forEach(id => clearTimeout(id))
+              setVisible(false)
+              onComplete()
+            }}
             aria-label="Skip intro animation"
           >
             Skip intro →

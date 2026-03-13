@@ -11,11 +11,21 @@ interface ThemeContextValue {
 
 const ThemeContext = createContext<ThemeContextValue | undefined>(undefined)
 
-export function ThemeProvider({ children }: { children: ReactNode }) {
-  const [mode, setMode] = useState<ThemeMode>(() => {
+const VALID_MODES: ThemeMode[] = ['fun', 'business']
+
+function getSavedMode(): ThemeMode {
+  try {
+    if (typeof window === 'undefined' || !window.localStorage) return 'fun'
     const saved = localStorage.getItem('portfolio-theme')
-    return (saved as ThemeMode) || 'fun'
-  })
+    if (saved && (VALID_MODES as string[]).includes(saved)) return saved as ThemeMode
+  } catch {
+    // localStorage blocked (e.g. private browsing with strict settings)
+  }
+  return 'fun'
+}
+
+export function ThemeProvider({ children }: { children: ReactNode }) {
+  const [mode, setMode] = useState<ThemeMode>(getSavedMode)
 
   useEffect(() => {
     localStorage.setItem('portfolio-theme', mode)

@@ -39,7 +39,7 @@ function ScoreboardFrame({ project, index, isExpanded, onToggle }: {
     >
       <div
         className={`
-          rounded-xl overflow-hidden border-2 border-yellow-400/50 shadow-lg
+          relative rounded-xl overflow-hidden border-2 border-yellow-400/50 shadow-lg
           bg-gradient-to-b from-[#1A1A2E] to-[#16213E]
           ${isExpanded ? 'ring-2 ring-yellow-400' : ''}
         `}

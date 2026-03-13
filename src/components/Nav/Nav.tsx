@@ -46,10 +46,11 @@ export default function Nav() {
       aria-label="Main navigation"
     >
       {/* Desktop nav */}
-      <ul className="hidden sm:flex items-center gap-1" role="list">
+      <ul className="hidden sm:flex items-center gap-1">
         {navLinks.map(link => (
           <li key={link.label}>
             <button
+              type="button"
               onClick={() => handleNav(link.label, link.href)}
               className={`
                 relative px-4 py-2 rounded-full text-sm font-medium transition-all duration-200
@@ -89,12 +90,13 @@ export default function Nav() {
           {active}
         </span>
         <button
+          type="button"
           className={`p-1.5 rounded-full ${isFun ? 'text-white hover:bg-white/20' : 'text-gray-600 hover:bg-gray-100'}`}
           onClick={() => setMenuOpen(v => !v)}
           aria-label="Toggle navigation menu"
           aria-expanded={menuOpen}
         >
-          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
             {menuOpen
               ? <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
               : <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
@@ -117,6 +119,7 @@ export default function Nav() {
           >
             {navLinks.map(link => (
               <button
+                type="button"
                 key={link.label}
                 onClick={() => handleNav(link.label, link.href)}
                 className={`

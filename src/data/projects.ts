@@ -47,11 +47,32 @@ export const projects: Project[] = [
   },
 ]
 
-export const skills = [
-  { name: 'React', color: '#1B6FD6', bgClass: 'bg-ball-blue' },
-  { name: 'Node.js', color: '#CC2222', bgClass: 'bg-ball-red' },
-  { name: 'Fastify', color: '#7B2FBE', bgClass: 'bg-ball-purple' },
-  { name: 'Docker', color: '#1A8A3A', bgClass: 'bg-ball-green' },
-  { name: 'AI Systems', color: '#1A1A1A', bgClass: 'bg-ball-black' },
-  { name: 'Cloud', color: '#D4A017', bgClass: 'bg-ball-gold' },
+export type SkillColorKey = 'blue' | 'red' | 'purple' | 'green' | 'black' | 'gold'
+
+export interface SkillStyle {
+  color: string
+  bgClass: string
+}
+
+export const skillStyleMap: Record<SkillColorKey, SkillStyle> = {
+  blue:   { color: '#1B6FD6', bgClass: 'bg-ball-blue' },
+  red:    { color: '#CC2222', bgClass: 'bg-ball-red' },
+  purple: { color: '#7B2FBE', bgClass: 'bg-ball-purple' },
+  green:  { color: '#1A8A3A', bgClass: 'bg-ball-green' },
+  black:  { color: '#1A1A1A', bgClass: 'bg-ball-black' },
+  gold:   { color: '#D4A017', bgClass: 'bg-ball-gold' },
+}
+
+export interface Skill {
+  name: string
+  colorKey: SkillColorKey
+}
+
+export const skills: Skill[] = [
+  { name: 'React',       colorKey: 'blue'   },
+  { name: 'Node.js',     colorKey: 'red'    },
+  { name: 'Fastify',     colorKey: 'purple' },
+  { name: 'Docker',      colorKey: 'green'  },
+  { name: 'AI Systems',  colorKey: 'black'  },
+  { name: 'Cloud',       colorKey: 'gold'   },
 ]

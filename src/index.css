@@ -79,8 +79,10 @@ body {
   outline-color: #374151;
 }
 
-/* Smooth theme transition */
-* {
+/* Smooth theme transition — targeted selectors only to avoid perf overhead */
+a, button, input, textarea, select,
+nav, footer, section, main,
+[class*="bg-"], [class*="border-"], [class*="text-"] {
   transition-property: background-color, border-color, color;
   transition-duration: 300ms;
   transition-timing-function: ease;

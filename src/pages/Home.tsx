@@ -1,4 +1,3 @@
-import { useRef } from 'react'
 import { motion } from 'framer-motion'
 import Hero from '../components/Hero/Hero'
 import Projects from '../components/Projects/Projects'
@@ -6,10 +5,17 @@ import Skills from '../components/Skills/Skills'
 import Contact from '../components/Contact/Contact'
 import { useTheme } from '../context/ThemeContext'
 
+function Divider({ isFun }: { isFun: boolean }) {
+  return (
+    <div
+      className={`h-px mx-8 ${isFun ? 'bg-white/20' : 'bg-gray-200'}`}
+      aria-hidden="true"
+    />
+  )
+}
+
 export default function Home() {
   const { isFun } = useTheme()
-  const projectsRef = useRef<HTMLDivElement>(null)
-  const contactRef = useRef<HTMLDivElement>(null)
 
   const scrollToProjects = () => {
     const el = document.getElementById('projects')
@@ -36,39 +42,20 @@ export default function Home() {
       {/* Hero */}
       <Hero onViewProjects={scrollToProjects} onContact={scrollToContact} />
 
-      {/* Divider */}
-      {isFun && (
-        <div className="h-px bg-white/20 mx-8" aria-hidden="true" />
-      )}
+      <Divider isFun={isFun} />
 
       {/* Projects */}
-      <div ref={projectsRef}>
-        <Projects />
-      </div>
+      <Projects />
 
-      {/* Divider */}
-      {isFun && (
-        <div className="h-px bg-white/20 mx-8" aria-hidden="true" />
-      )}
-      {!isFun && (
-        <div className="h-px bg-gray-200 mx-8" aria-hidden="true" />
-      )}
+      <Divider isFun={isFun} />
 
       {/* Skills */}
       <Skills />
 
-      {/* Divider */}
-      {isFun && (
-        <div className="h-px bg-white/20 mx-8" aria-hidden="true" />
-      )}
-      {!isFun && (
-        <div className="h-px bg-gray-200 mx-8" aria-hidden="true" />
-      )}
+      <Divider isFun={isFun} />
 
       {/* Contact */}
-      <div ref={contactRef}>
-        <Contact />
-      </div>
+      <Contact />
 
       {/* Footer */}
       <footer
@@ -79,7 +66,6 @@ export default function Home() {
             : 'text-gray-400 font-business border-t border-gray-200'
           }
         `}
-        role="contentinfo"
       >
         <p>© {new Date().getFullYear()} Matt Kerns. Built with React, Vite &amp; Three.js.</p>
         {isFun && (

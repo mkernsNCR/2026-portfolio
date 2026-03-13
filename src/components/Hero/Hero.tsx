@@ -62,16 +62,27 @@ export default function Hero({
             ))}
           </div>
           {/* Pins silhouette */}
-          <div className="absolute bottom-[52%] left-1/2 -translate-x-1/2 flex gap-1.5 scale-75">
-            {Array.from({ length: 4 }).map((_, row) =>
-              Array.from({ length: row + 1 }).map((__, col) => (
-                <div
-                  key={`${row}-${col}`}
-                  className="w-3 h-8 bg-white/80 rounded-full shadow"
-                  style={{ marginLeft: row === 0 ? 0 : col === 0 ? `-${row * 6}px` : '0' }}
-                />
-              ))
-            )}
+          <div className="absolute bottom-[52%] left-1/2 -translate-x-1/2 scale-75">
+            <div className="flex flex-col items-center gap-1.5">
+              <div className="flex items-center gap-1.5">
+                <div className="w-3 h-8 bg-white/80 rounded-full shadow" />
+              </div>
+              <div className="flex items-center gap-1.5">
+                <div className="w-3 h-8 bg-white/80 rounded-full shadow" />
+                <div className="w-3 h-8 bg-white/80 rounded-full shadow" />
+              </div>
+              <div className="flex items-center gap-1.5">
+                <div className="w-3 h-8 bg-white/80 rounded-full shadow" />
+                <div className="w-3 h-8 bg-white/80 rounded-full shadow" />
+                <div className="w-3 h-8 bg-white/80 rounded-full shadow" />
+              </div>
+              <div className="flex items-center gap-1.5">
+                <div className="w-3 h-8 bg-white/80 rounded-full shadow" />
+                <div className="w-3 h-8 bg-white/80 rounded-full shadow" />
+                <div className="w-3 h-8 bg-white/80 rounded-full shadow" />
+                <div className="w-3 h-8 bg-white/80 rounded-full shadow" />
+              </div>
+            </div>
           </div>
           {/* Gutter lines */}
           <div
@@ -167,6 +178,7 @@ export default function Hero({
 
             <motion.div variants={itemVariants} className="flex flex-wrap gap-3">
               <button
+                type="button"
                 onClick={onViewProjects}
                 className={`
                   flex items-center gap-2 transition-all duration-200
@@ -182,6 +194,7 @@ export default function Hero({
               </button>
 
               <button
+                type="button"
                 onClick={onContact}
                 className={`
                   flex items-center gap-2 transition-all duration-200
@@ -218,12 +231,14 @@ export default function Hero({
             <Suspense
               fallback={
                 <div
+                  role="status"
+                  aria-live="polite"
                   className={`
                     w-48 h-48 rounded-full flex items-center justify-center text-6xl
                     ${isFun ? 'bg-wii-blue animate-spin-slow' : 'bg-gray-200 animate-spin-slow'}
                   `}
-                  aria-label="Loading 3D bowling ball"
                 >
+                  <span className="sr-only">Loading 3D bowling ball</span>
                   🎳
                 </div>
               }

@@ -1,3 +1,5 @@
+import type { ThemeTokens } from './types'
+
 export const businessTheme = {
   // Layout
   pageBackground: 'bg-gray-50',
@@ -31,4 +33,4 @@ export const businessTheme = {
   // Misc
   divider: 'border-gray-200',
   badge: 'bg-gray-100 text-gray-700 font-business text-sm px-3 py-1 rounded-md border border-gray-200',
-} as const
+} as const satisfies ThemeTokens
