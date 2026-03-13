@@ -1,4 +1,4 @@
-import { useRef, useEffect, useState } from 'react'
+import { useRef, useEffect, useState, useMemo } from 'react'
 import { Canvas, useFrame, useThree } from '@react-three/fiber'
 import { motion, AnimatePresence } from 'framer-motion'
 import * as THREE from 'three'
@@ -162,6 +162,11 @@ export default function BowlingLaneIntro({ onComplete }: BowlingLaneIntroProps) 
   const [pinsDown, setPinsDown] = useState(false)
   const [visible, setVisible] = useState(true)
   const timeoutsRef = useRef<ReturnType<typeof setTimeout>[]>([])
+  const pinDelays = useMemo(
+    () => PIN_POSITIONS.map((_, i) => i * 80 + Math.floor(Math.random() * 100)),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    []
+  )
 
   useEffect(() => {
     const t1 = setTimeout(() => setPhase('rolling'), 800)
@@ -170,7 +175,7 @@ export default function BowlingLaneIntro({ onComplete }: BowlingLaneIntroProps) 
 
   useEffect(() => {
     return () => {
-      timeoutsRef.current.forEach(id => clearTimeout(id))
+      for (const id of timeoutsRef.current) clearTimeout(id)
     }
   }, [])
 
@@ -218,7 +223,7 @@ export default function BowlingLaneIntro({ onComplete }: BowlingLaneIntroProps) 
                 key={i}
                 position={pos}
                 fallen={pinsDown}
-                delay={i * 80 + Math.random() * 100}
+                delay={pinDelays[i]}
               />
             ))}
 
@@ -270,7 +275,7 @@ export default function BowlingLaneIntro({ onComplete }: BowlingLaneIntroProps) 
             type="button"
             className="absolute bottom-6 right-6 text-white/50 hover:text-white/90 text-sm font-wii transition-colors px-4 py-2 rounded-full border border-white/20 hover:border-white/50"
             onClick={() => {
-              timeoutsRef.current.forEach(id => clearTimeout(id))
+              for (const id of timeoutsRef.current) clearTimeout(id)
               setVisible(false)
               onComplete()
             }}

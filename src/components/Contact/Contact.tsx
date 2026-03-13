@@ -6,6 +6,7 @@ const contactLinks = [
   {
     label: 'Email',
     href: 'mailto:matt@example.com',
+    external: false,
     icon: '✉️',
     businessIcon: (
       <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
@@ -16,6 +17,7 @@ const contactLinks = [
   {
     label: 'LinkedIn',
     href: 'https://linkedin.com/in/mattkerns',
+    external: true,
     icon: '💼',
     businessIcon: (
       <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
@@ -26,6 +28,7 @@ const contactLinks = [
   {
     label: 'GitHub',
     href: 'https://github.com/mattkerns',
+    external: true,
     icon: '🐙',
     businessIcon: (
       <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
@@ -36,6 +39,7 @@ const contactLinks = [
   {
     label: 'Discord',
     href: 'https://discord.com/',
+    external: true,
     icon: '🎮',
     businessIcon: (
       <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
@@ -174,6 +178,7 @@ export default function Contact() {
                     <motion.a
                       key={link.label}
                       href={link.href}
+                      {...(link.external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
                       className="flex items-center gap-2 bg-white/15 text-white font-wii font-bold px-5 py-2.5 rounded-full border border-white/30 hover:bg-white/25 transition-colors"
                       whileHover={{ scale: 1.05, y: -2 }}
                       whileTap={{ scale: 0.96 }}
@@ -220,6 +225,7 @@ export default function Contact() {
                   <motion.a
                     key={link.label}
                     href={link.href}
+                    {...(link.external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
                     className="flex items-center gap-2 bg-white text-gray-700 font-business font-medium px-4 py-2.5 rounded-lg border border-gray-200 hover:bg-gray-50 hover:border-gray-300 transition-colors shadow-sm text-sm"
                     whileHover={{ y: -1 }}
                     whileTap={{ scale: 0.97 }}

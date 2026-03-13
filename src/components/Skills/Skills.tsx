@@ -23,18 +23,13 @@ function BowlingBallSkill({ skill, index }: { skill: typeof skills[0]; index: nu
   return (
     <motion.div
       variants={itemVariants}
-      className="flex flex-col items-center gap-3 cursor-pointer"
+      className="flex flex-col items-center gap-3"
+      role="listitem"
+      aria-label={`${skill.name} skill`}
       onHoverStart={() => setIsHovered(true)}
       onHoverEnd={() => setIsHovered(false)}
       whileHover={{ y: -12, scale: 1.1 }}
       whileTap={{ scale: 0.93 }}
-      role="button"
-      tabIndex={0}
-      aria-label={`${skill.name} skill`}
-      onKeyDown={e => {
-        if (e.key === 'Enter') { setIsHovered(true) }
-        if (e.key === ' ') { e.preventDefault(); setIsHovered(v => !v) }
-      }}
     >
       {/* Ball */}
       <motion.div

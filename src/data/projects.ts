@@ -14,8 +14,6 @@ export const projects: Project[] = [
     title: 'Kanban',
     description: 'Lightweight Kanban board for task management.',
     tech: ['React', 'Node.js', 'PostgreSQL'],
-    github: '#',
-    demo: '#',
     frameNumber: 1,
   },
   {
@@ -23,8 +21,6 @@ export const projects: Project[] = [
     title: 'Bowling Calculator',
     description: 'Bowling scoring and probability calculator.',
     tech: ['React', 'TypeScript', 'Tailwind'],
-    github: '#',
-    demo: '#',
     frameNumber: 2,
   },
   {
@@ -32,8 +28,6 @@ export const projects: Project[] = [
     title: 'Resume Builder',
     description: 'Tool for generating structured professional resumes.',
     tech: ['React', 'Fastify', 'PDF.js'],
-    github: '#',
-    demo: '#',
     frameNumber: 3,
   },
   {
@@ -41,8 +35,6 @@ export const projects: Project[] = [
     title: 'Bowling League Tracker',
     description: 'League tracking and performance analytics.',
     tech: ['React', 'Node.js', 'Docker'],
-    github: '#',
-    demo: '#',
     frameNumber: 4,
   },
 ]

@@ -21,8 +21,41 @@ export default function Nav() {
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
 
+  // Derive active section from IntersectionObserver + hashchange
+  useEffect(() => {
+    const sectionIds = navLinks.map(l => l.href.slice(1))
+    const observers: IntersectionObserver[] = []
+
+    sectionIds.forEach(id => {
+      const el = document.getElementById(id)
+      if (!el) return
+      const obs = new IntersectionObserver(
+        ([entry]) => {
+          if (entry.isIntersecting) {
+            const link = navLinks.find(l => l.href === `#${id}`)
+            if (link) setActive(link.label)
+          }
+        },
+        { threshold: 0.3 }
+      )
+      obs.observe(el)
+      observers.push(obs)
+    })
+
+    const onHashChange = () => {
+      const hash = window.location.hash
+      const link = navLinks.find(l => l.href === hash)
+      if (link) setActive(link.label)
+    }
+    window.addEventListener('hashchange', onHashChange)
+
+    return () => {
+      for (const obs of observers) obs.disconnect()
+      window.removeEventListener('hashchange', onHashChange)
+    }
+  }, [])
+
   const handleNav = (label: string, href: string) => {
-    setActive(label)
     setMenuOpen(false)
     const el = document.querySelector(href)
     if (el) el.scrollIntoView({ behavior: 'smooth' })

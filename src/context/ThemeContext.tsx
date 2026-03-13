@@ -28,8 +28,16 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
   const [mode, setMode] = useState<ThemeMode>(getSavedMode)
 
   useEffect(() => {
-    localStorage.setItem('portfolio-theme', mode)
-    document.documentElement.className = `theme-${mode}`
+    try {
+      localStorage.setItem('portfolio-theme', mode)
+    } catch {
+      // storage write blocked; non-fatal
+    }
+    const root = document.documentElement
+    for (const cls of Array.from(root.classList)) {
+      if (cls.startsWith('theme-')) root.classList.remove(cls)
+    }
+    root.classList.add(`theme-${mode}`)
   }, [mode])
 
   const toggleMode = () => {

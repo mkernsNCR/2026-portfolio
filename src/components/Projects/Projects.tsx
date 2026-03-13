@@ -100,22 +100,44 @@ function ScoreboardFrame({ project, index, isExpanded, onToggle }: {
               className="overflow-hidden"
             >
               <div className="px-4 pb-4 pt-2 border-t border-white/10 flex gap-2">
-                <a
-                  href={project.demo || '#'}
-                  className="flex-1 text-center bg-gradient-to-b from-sky-400 to-sky-600 text-white font-wii font-bold text-sm py-2 rounded-full border-b-2 border-sky-700 hover:-translate-y-0.5 transition-transform"
-                  onClick={e => e.stopPropagation()}
-                  aria-label={`View ${project.title} demo`}
-                >
-                  ▶ View Project
-                </a>
-                <a
-                  href={project.github || '#'}
-                  className="flex-1 text-center bg-white/15 text-white font-wii font-bold text-sm py-2 rounded-full border border-white/30 hover:bg-white/25 transition-colors"
-                  onClick={e => e.stopPropagation()}
-                  aria-label={`View ${project.title} code`}
-                >
-                  {'</>'}  Code
-                </a>
+                {project.demo && project.demo !== '#' ? (
+                  <a
+                    href={project.demo}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex-1 text-center bg-gradient-to-b from-sky-400 to-sky-600 text-white font-wii font-bold text-sm py-2 rounded-full border-b-2 border-sky-700 hover:-translate-y-0.5 transition-transform"
+                    onClick={e => e.stopPropagation()}
+                    aria-label={`View ${project.title} demo`}
+                  >
+                    ▶ View Project
+                  </a>
+                ) : (
+                  <span
+                    className="flex-1 text-center bg-white/10 text-white/40 font-wii font-bold text-sm py-2 rounded-full border border-white/10 cursor-not-allowed"
+                    aria-disabled="true"
+                  >
+                    ▶ View Project
+                  </span>
+                )}
+                {project.github && project.github !== '#' ? (
+                  <a
+                    href={project.github}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex-1 text-center bg-white/15 text-white font-wii font-bold text-sm py-2 rounded-full border border-white/30 hover:bg-white/25 transition-colors"
+                    onClick={e => e.stopPropagation()}
+                    aria-label={`View ${project.title} code`}
+                  >
+                    {'</>'} Code
+                  </a>
+                ) : (
+                  <span
+                    className="flex-1 text-center bg-white/10 text-white/40 font-wii font-bold text-sm py-2 rounded-full border border-white/10 cursor-not-allowed"
+                    aria-disabled="true"
+                  >
+                    {'</>'} Code
+                  </span>
+                )}
               </div>
             </motion.div>
           )}
@@ -187,22 +209,44 @@ function BusinessCard({ project, isExpanded, onToggle }: {
             className="overflow-hidden"
           >
             <div className="px-6 pb-6 pt-2 border-t border-gray-100 flex gap-2">
-              <a
-                href={project.demo || '#'}
-                className="flex-1 text-center bg-gray-900 text-white font-business font-medium text-sm py-2.5 rounded-lg hover:bg-gray-800 transition-colors"
-                onClick={e => e.stopPropagation()}
-                aria-label={`View ${project.title} demo`}
-              >
-                View Project
-              </a>
-              <a
-                href={project.github || '#'}
-                className="flex-1 text-center bg-white text-gray-700 font-business font-medium text-sm py-2.5 rounded-lg border border-gray-300 hover:bg-gray-50 transition-colors"
-                onClick={e => e.stopPropagation()}
-                aria-label={`View ${project.title} source code`}
-              >
-                View Code
-              </a>
+              {project.demo && project.demo !== '#' ? (
+                <a
+                  href={project.demo}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex-1 text-center bg-gray-900 text-white font-business font-medium text-sm py-2.5 rounded-lg hover:bg-gray-800 transition-colors"
+                  onClick={e => e.stopPropagation()}
+                  aria-label={`View ${project.title} demo`}
+                >
+                  View Project
+                </a>
+              ) : (
+                <span
+                  className="flex-1 text-center bg-gray-100 text-gray-400 font-business font-medium text-sm py-2.5 rounded-lg cursor-not-allowed"
+                  aria-disabled="true"
+                >
+                  View Project
+                </span>
+              )}
+              {project.github && project.github !== '#' ? (
+                <a
+                  href={project.github}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex-1 text-center bg-white text-gray-700 font-business font-medium text-sm py-2.5 rounded-lg border border-gray-300 hover:bg-gray-50 transition-colors"
+                  onClick={e => e.stopPropagation()}
+                  aria-label={`View ${project.title} source code`}
+                >
+                  View Code
+                </a>
+              ) : (
+                <span
+                  className="flex-1 text-center bg-gray-50 text-gray-400 font-business font-medium text-sm py-2.5 rounded-lg border border-gray-200 cursor-not-allowed"
+                  aria-disabled="true"
+                >
+                  View Code
+                </span>
+              )}
             </div>
           </motion.div>
         )}
