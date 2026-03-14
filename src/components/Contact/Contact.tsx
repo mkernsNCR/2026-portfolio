@@ -1,11 +1,12 @@
 import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useTheme } from '../../context/ThemeContext'
+import { siteConfig } from '../../data/site'
 
 const contactLinks = [
   {
     label: 'Email',
-    href: 'mailto:matt@example.com',
+    href: siteConfig.email ? `mailto:${siteConfig.email}` : '',
     external: false,
     icon: '✉️',
     businessIcon: (
@@ -16,7 +17,7 @@ const contactLinks = [
   },
   {
     label: 'LinkedIn',
-    href: 'https://linkedin.com/in/mattkerns',
+    href: siteConfig.linkedin,
     external: true,
     icon: '💼',
     businessIcon: (
@@ -27,7 +28,7 @@ const contactLinks = [
   },
   {
     label: 'GitHub',
-    href: 'https://github.com/mattkerns',
+    href: siteConfig.github,
     external: true,
     icon: '🐙',
     businessIcon: (
@@ -38,7 +39,7 @@ const contactLinks = [
   },
   {
     label: 'Discord',
-    href: 'https://discord.com/',
+    href: siteConfig.discord,
     external: true,
     icon: '🎮',
     businessIcon: (
@@ -47,7 +48,7 @@ const contactLinks = [
       </svg>
     ),
   },
-]
+].filter(link => Boolean(link.href))
 
 // Falling pin animation for fun mode
 function StrikeAnimation({ visible }: { visible: boolean }) {

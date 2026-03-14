@@ -1,25 +1,50 @@
 import { useState, useEffect, Suspense, lazy } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 import { ThemeProvider, useTheme } from './context/ThemeContext'
-import ModeToggle from './components/ModeToggle/ModeToggle'
-import Nav from './components/Nav/Nav'
-import Home from './pages/Home'
+import SiteHeader from './components/SiteHeader/SiteHeader'
+import PortfolioPage from './pages/PortfolioPage'
+import { siteConfig } from './data/site'
 
 const BowlingLaneIntro = lazy(() => import('./components/BowlingLaneIntro/BowlingLaneIntro'))
 
 function AppContent() {
-  const { isFun } = useTheme()
+  const { isFun, mode } = useTheme()
   const [showIntro, setShowIntro] = useState(false)
   const [introComplete, setIntroComplete] = useState(false)
 
   useEffect(() => {
-    // Show intro only once per session in fun mode
     const seen = sessionStorage.getItem('intro-seen')
     if (isFun && !seen) {
       setShowIntro(true)
       setIntroComplete(false)
     }
   }, [isFun])
+
+  useEffect(() => {
+    document.title = siteConfig.seoTitle
+
+    const upsertMeta = (selector: string, attributes: Record<string, string>) => {
+      let element = document.head.querySelector(selector) as HTMLMetaElement | null
+      if (!element) {
+        element = document.createElement('meta')
+        document.head.appendChild(element)
+      }
+
+      Object.entries(attributes).forEach(([key, value]) => {
+        element?.setAttribute(key, value)
+      })
+    }
+
+    upsertMeta('meta[name="description"]', { name: 'description', content: siteConfig.seoDescription })
+    upsertMeta('meta[property="og:title"]', { property: 'og:title', content: siteConfig.seoTitle })
+    upsertMeta('meta[property="og:description"]', { property: 'og:description', content: siteConfig.seoDescription })
+    upsertMeta('meta[property="og:type"]', { property: 'og:type', content: 'website' })
+    upsertMeta('meta[property="og:image"]', { property: 'og:image', content: siteConfig.ogImage })
+    upsertMeta('meta[name="twitter:card"]', { name: 'twitter:card', content: 'summary_large_image' })
+    upsertMeta('meta[name="twitter:title"]', { name: 'twitter:title', content: siteConfig.seoTitle })
+    upsertMeta('meta[name="twitter:description"]', { name: 'twitter:description', content: siteConfig.seoDescription })
+    upsertMeta('meta[name="theme-color"]', { name: 'theme-color', content: mode === 'fun' ? '#2563eb' : '#0f172a' })
+  }, [mode])
 
   const handleIntroComplete = () => {
     sessionStorage.setItem('intro-seen', '1')
@@ -29,14 +54,12 @@ function AppContent() {
 
   return (
     <>
-      {/* Bowling intro overlay */}
       {showIntro && (
         <Suspense fallback={null}>
           <BowlingLaneIntro onComplete={handleIntroComplete} />
         </Suspense>
       )}
 
-      {/* Main app - fade in after intro or immediately in business mode */}
       <AnimatePresence mode="wait">
         <motion.div
           key={isFun ? 'fun' : 'business'}
@@ -44,9 +67,8 @@ function AppContent() {
           animate={{ opacity: showIntro && !introComplete ? 0 : 1 }}
           transition={{ duration: 0.6 }}
         >
-          <ModeToggle />
-          <Nav />
-          <Home />
+          <SiteHeader />
+          <PortfolioPage />
         </motion.div>
       </AnimatePresence>
     </>

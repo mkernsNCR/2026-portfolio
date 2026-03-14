@@ -5,6 +5,7 @@ export type ThemeMode = 'fun' | 'business'
 interface ThemeContextValue {
   mode: ThemeMode
   toggleMode: () => void
+  setMode: (mode: ThemeMode) => void
   isFun: boolean
   isBusiness: boolean
 }
@@ -41,7 +42,7 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
   }, [mode])
 
   const toggleMode = () => {
-    setMode(prev => (prev === 'fun' ? 'business' : 'fun'))
+    setMode((prev: ThemeMode) => (prev === 'fun' ? 'business' : 'fun'))
   }
 
   return (
@@ -49,6 +50,7 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
       value={{
         mode,
         toggleMode,
+        setMode,
         isFun: mode === 'fun',
         isBusiness: mode === 'business',
       }}
