@@ -21,7 +21,18 @@ function AppContent() {
   }, [isFun])
 
   useEffect(() => {
+    if (!isFun && showIntro) {
+      sessionStorage.setItem('intro-seen', '1')
+      setShowIntro(false)
+      setIntroComplete(true)
+    }
+  }, [isFun, showIntro])
+
+  useEffect(() => {
     document.title = siteConfig.seoTitle
+    const ogImage = siteConfig.ogImage.startsWith('http')
+      ? siteConfig.ogImage
+      : new URL(siteConfig.ogImage, window.location.origin).toString()
 
     const upsertMeta = (selector: string, attributes: Record<string, string>) => {
       let element = document.head.querySelector(selector) as HTMLMetaElement | null
@@ -39,10 +50,11 @@ function AppContent() {
     upsertMeta('meta[property="og:title"]', { property: 'og:title', content: siteConfig.seoTitle })
     upsertMeta('meta[property="og:description"]', { property: 'og:description', content: siteConfig.seoDescription })
     upsertMeta('meta[property="og:type"]', { property: 'og:type', content: 'website' })
-    upsertMeta('meta[property="og:image"]', { property: 'og:image', content: siteConfig.ogImage })
+    upsertMeta('meta[property="og:image"]', { property: 'og:image', content: ogImage })
     upsertMeta('meta[name="twitter:card"]', { name: 'twitter:card', content: 'summary_large_image' })
     upsertMeta('meta[name="twitter:title"]', { name: 'twitter:title', content: siteConfig.seoTitle })
     upsertMeta('meta[name="twitter:description"]', { name: 'twitter:description', content: siteConfig.seoDescription })
+    upsertMeta('meta[name="twitter:image"]', { name: 'twitter:image', content: ogImage })
     upsertMeta('meta[name="theme-color"]', { name: 'theme-color', content: mode === 'fun' ? '#2563eb' : '#0f172a' })
   }, [mode])
 

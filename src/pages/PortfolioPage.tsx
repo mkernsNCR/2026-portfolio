@@ -4,17 +4,9 @@ import { useTheme } from '../context/ThemeContext'
 import { githubActivity, professionalSummary, projects, skills, skillStyleMap, type Project } from '../data/projects'
 import { siteConfig } from '../data/site'
 import ProjectDetailsModal from '../components/ProjectDetailsModal/ProjectDetailsModal'
+import { scrollToSection } from '../utils/scrollToSection'
 
 const BowlingBall3D = lazy(() => import('../components/Hero/BowlingBall3D'))
-
-function scrollToSection(id: string) {
-  const element = document.getElementById(id)
-  if (!element) return
-  const headerOffset = 92
-  const top = element.getBoundingClientRect().top + window.scrollY - headerOffset
-  window.history.replaceState(null, '', `#${id}`)
-  window.scrollTo({ top, behavior: 'smooth' })
-}
 
 function ActionButton({
   label,
@@ -43,7 +35,7 @@ function ActionButton({
         : variant === 'secondary'
           ? 'border border-slate-300 bg-white font-business text-slate-900'
           : 'bg-slate-100 font-business text-slate-600'
-  } ${disabled ? 'cursor-not-allowed opacity-55' : 'hover:-translate-y-0.5'} inline-flex items-center justify-center rounded-2xl px-5 py-3 text-sm font-semibold transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2`
+  } ${disabled ? 'cursor-not-allowed opacity-[0.55]' : 'hover:-translate-y-0.5'} inline-flex items-center justify-center rounded-2xl px-5 py-3 text-sm font-semibold transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2`
 
   if (href && !disabled) {
     return (
@@ -261,9 +253,9 @@ function ProjectCard({ project, index, onOpen }: { project: Project; index: numb
                 <span key={item} className="rounded-full border border-white/10 bg-white/5 px-3 py-1.5 text-xs font-wii text-white/75">{item}</span>
               ))}
             </div>
-            <div className="mt-6 flex flex-wrap gap-3 text-sm font-wii">
-              <span className="rounded-full bg-sky-500 px-4 py-2 text-white">View Project</span>
-              <span className="rounded-full border border-white/20 bg-white/5 px-4 py-2 text-white">Code</span>
+            <div className="mt-6 flex items-center justify-between gap-3 text-xs font-wii text-white/60" aria-hidden="true">
+              <span>Includes live demo, screenshots, and code context</span>
+              <span className="rounded-full border border-white/10 px-3 py-1">Click to expand</span>
             </div>
           </div>
         </div>
@@ -283,9 +275,9 @@ function ProjectCard({ project, index, onOpen }: { project: Project; index: numb
               <span key={item} className="rounded-full border border-slate-200 bg-slate-50 px-3 py-1.5 text-xs font-business text-slate-600">{item}</span>
             ))}
           </div>
-          <div className="mt-6 flex flex-wrap gap-3 text-sm font-business">
-            <span className="rounded-2xl bg-slate-950 px-4 py-2 text-white">View Project</span>
-            <span className="rounded-2xl border border-slate-300 bg-white px-4 py-2 text-slate-700">Code</span>
+          <div className="mt-6 flex items-center justify-between gap-3 text-xs font-business text-slate-500" aria-hidden="true">
+            <span>Includes demo, architecture notes, and repository details</span>
+            <span className="rounded-full border border-slate-200 px-3 py-1 text-slate-600">Click to expand</span>
           </div>
         </div>
       )}
@@ -408,6 +400,9 @@ function GitHubSection() {
   const heatColors = useMemo(() => (isFun
     ? ['bg-white/[0.08]', 'bg-sky-900/60', 'bg-sky-700/70', 'bg-sky-500/80', 'bg-yellow-300']
     : ['bg-slate-100', 'bg-slate-200', 'bg-sky-200', 'bg-sky-400', 'bg-slate-900']), [isFun])
+  const contributionValues = useMemo(() => githubActivity.contributionGraph.flat(), [])
+  const activeContributionDays = contributionValues.filter(value => value > 0).length
+  const highestContribution = Math.max(...contributionValues)
 
   return (
     <section className="px-4 py-12 sm:px-6 lg:px-8">
@@ -426,12 +421,12 @@ function GitHubSection() {
 
           <div className="grid gap-8 lg:grid-cols-[1.2fr_0.8fr]">
             <div>
-              <div className={`grid grid-cols-12 gap-2 rounded-[28px] border p-5 ${isFun ? 'border-white/10 bg-white/5' : 'border-slate-200 bg-slate-50'}`}>
+              <div role="img" aria-label={`GitHub contribution heatmap showing ${activeContributionDays} active days with intensity levels from 0 to ${highestContribution}.`} className={`grid grid-cols-12 gap-2 rounded-[28px] border p-5 ${isFun ? 'border-white/10 bg-white/5' : 'border-slate-200 bg-slate-50'}`}>
                 {githubActivity.contributionGraph.flatMap((row, rowIndex) => row.map((value, columnIndex) => (
                   <div
                     key={`${rowIndex}-${columnIndex}`}
                     className={`aspect-square rounded-md ${heatColors[value]}`}
-                    aria-label={`Contribution intensity ${value}`}
+                    aria-hidden="true"
                   />
                 )))}
               </div>
@@ -564,7 +559,7 @@ function ContactSection() {
               <div className="mt-7 flex flex-wrap gap-3">
                 <ActionButton label="View Projects" onClick={() => scrollToSection('projects')} variant="primary" isFun={isFun} />
                 <ActionButton label={siteConfig.resumeHref ? 'Download Resume' : 'Resume Available on Request'} href={siteConfig.resumeHref || undefined} variant="secondary" isFun={isFun} disabled={!siteConfig.resumeHref} />
-                <ActionButton label="Contact Me" onClick={() => window.location.hash = '#contact'} variant="ghost" isFun={isFun} />
+                <ActionButton label="Contact Me" onClick={() => scrollToSection('contact')} variant="ghost" isFun={isFun} />
               </div>
             </div>
 

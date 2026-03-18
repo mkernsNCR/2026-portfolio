@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 import { useTheme, type ThemeMode } from '../../context/ThemeContext'
+import { scrollToSection, SITE_HEADER_ID } from '../../utils/scrollToSection'
 
 const navLinks = [
   { label: 'Home', href: 'home' },
@@ -8,15 +9,6 @@ const navLinks = [
   { label: 'Skills', href: 'skills' },
   { label: 'Contact', href: 'contact' },
 ]
-
-function scrollToSection(id: string) {
-  const element = document.getElementById(id)
-  if (!element) return
-  const headerOffset = 92
-  const top = element.getBoundingClientRect().top + window.scrollY - headerOffset
-  window.history.replaceState(null, '', `#${id}`)
-  window.scrollTo({ top, behavior: 'smooth' })
-}
 
 function ModeSegment({
   value,
@@ -108,7 +100,7 @@ export default function SiteHeader() {
     : 'border-slate-200 bg-slate-100 text-slate-700'
 
   return (
-    <header className="fixed inset-x-0 top-0 z-50 px-4 pt-4 sm:px-6 lg:px-8">
+    <header id={SITE_HEADER_ID} className="fixed inset-x-0 top-0 z-50 px-4 pt-4 sm:px-6 lg:px-8">
       <div className="mx-auto max-w-6xl">
         <div className={`rounded-[28px] border transition-all duration-300 ${headerShell}`}>
           <div className="flex flex-col gap-4 px-4 py-3 sm:px-5 lg:px-6">

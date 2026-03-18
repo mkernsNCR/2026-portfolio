@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useEffect, useRef } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 import type { Project } from '../../data/projects'
 import { useTheme } from '../../context/ThemeContext'
@@ -10,15 +10,73 @@ interface ProjectDetailsModalProps {
 
 export default function ProjectDetailsModal({ project, onClose }: ProjectDetailsModalProps) {
   const { isFun } = useTheme()
+  const dialogRef = useRef<HTMLDivElement | null>(null)
+  const closeButtonRef = useRef<HTMLButtonElement | null>(null)
+  const onCloseRef = useRef(onClose)
+
+  useEffect(() => {
+    onCloseRef.current = onClose
+  }, [onClose])
 
   useEffect(() => {
     if (!project) return
 
     const previousOverflow = document.body.style.overflow
+    const previousActiveElement = document.activeElement instanceof HTMLElement ? document.activeElement : null
     document.body.style.overflow = 'hidden'
 
+    const getFocusableElements = () => {
+      const dialogElement = dialogRef.current
+      if (!dialogElement) return []
+
+      return Array.from(
+        dialogElement.querySelectorAll<HTMLElement>('a[href], button:not([disabled]), textarea:not([disabled]), input:not([disabled]), select:not([disabled]), [tabindex]:not([tabindex="-1"])')
+      ).filter(element => !element.hasAttribute('disabled') && element.getAttribute('aria-hidden') !== 'true')
+    }
+
+    requestAnimationFrame(() => {
+      if (closeButtonRef.current) {
+        closeButtonRef.current.focus()
+        return
+      }
+
+      dialogRef.current?.focus()
+    })
+
     const onKeyDown = (event: KeyboardEvent) => {
-      if (event.key === 'Escape') onClose()
+      if (event.key === 'Escape') {
+        onCloseRef.current()
+        return
+      }
+
+      if (event.key !== 'Tab') return
+
+      const dialogElement = dialogRef.current
+      if (!dialogElement) return
+
+      const focusableElements = getFocusableElements()
+      if (!focusableElements.length) {
+        event.preventDefault()
+        dialogElement.focus()
+        return
+      }
+
+      const firstElement = focusableElements[0]
+      const lastElement = focusableElements[focusableElements.length - 1]
+      const activeElement = document.activeElement instanceof HTMLElement ? document.activeElement : null
+
+      if (event.shiftKey) {
+        if (!activeElement || activeElement === firstElement || !dialogElement.contains(activeElement)) {
+          event.preventDefault()
+          lastElement.focus()
+        }
+        return
+      }
+
+      if (!activeElement || activeElement === lastElement || !dialogElement.contains(activeElement)) {
+        event.preventDefault()
+        firstElement.focus()
+      }
     }
 
     window.addEventListener('keydown', onKeyDown)
@@ -26,8 +84,12 @@ export default function ProjectDetailsModal({ project, onClose }: ProjectDetails
     return () => {
       document.body.style.overflow = previousOverflow
       window.removeEventListener('keydown', onKeyDown)
+      previousActiveElement?.focus()
     }
-  }, [project, onClose])
+  }, [project])
+
+  const hasDemo = Boolean(project?.demo && project.demo !== '#')
+  const hasGithub = Boolean(project?.github && project.github !== '#')
 
   return (
     <AnimatePresence>
@@ -43,6 +105,8 @@ export default function ProjectDetailsModal({ project, onClose }: ProjectDetails
           aria-labelledby="project-modal-title"
         >
           <motion.div
+            ref={dialogRef}
+            tabIndex={-1}
             className={`relative max-h-[90vh] w-full max-w-5xl overflow-hidden rounded-[32px] border ${isFun ? 'border-yellow-300/40 bg-[#101a33] text-white' : 'border-slate-200 bg-white text-slate-900'} shadow-2xl`}
             initial={{ opacity: 0, y: 24, scale: 0.97 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
@@ -66,6 +130,7 @@ export default function ProjectDetailsModal({ project, onClose }: ProjectDetails
                   </div>
 
                   <button
+                    ref={closeButtonRef}
                     type="button"
                     onClick={onClose}
                     className={`rounded-full px-4 py-2 text-sm font-medium transition-colors ${isFun ? 'bg-white/10 font-wii text-white hover:bg-white/20' : 'bg-slate-100 font-business text-slate-700 hover:bg-slate-200'}`}
@@ -156,7 +221,7 @@ export default function ProjectDetailsModal({ project, onClose }: ProjectDetails
                   </section>
 
                   <section className="grid gap-3">
-                    {project.demo ? (
+                    {hasDemo ? (
                       <a
                         href={project.demo}
                         target="_blank"
@@ -170,14 +235,20 @@ export default function ProjectDetailsModal({ project, onClose }: ProjectDetails
                         Live Demo Not Available
                       </span>
                     )}
-                    <a
-                      href={project.github}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className={`rounded-2xl px-5 py-3 text-center text-sm font-semibold transition-colors ${isFun ? 'border border-white/20 bg-white/10 font-wii text-white hover:bg-white/20' : 'border border-slate-300 bg-white font-business text-slate-800 hover:bg-slate-50'}`}
-                    >
-                      View GitHub Repository
-                    </a>
+                    {hasGithub ? (
+                      <a
+                        href={project.github}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className={`rounded-2xl px-5 py-3 text-center text-sm font-semibold transition-colors ${isFun ? 'border border-white/20 bg-white/10 font-wii text-white hover:bg-white/20' : 'border border-slate-300 bg-white font-business text-slate-800 hover:bg-slate-50'}`}
+                      >
+                        View GitHub Repository
+                      </a>
+                    ) : (
+                      <span className={`rounded-2xl px-5 py-3 text-center text-sm font-semibold ${isFun ? 'bg-white/10 font-wii text-white/40' : 'bg-slate-100 font-business text-slate-400'}`} aria-disabled="true">
+                        GitHub Link Not Available
+                      </span>
+                    )}
                   </section>
                 </aside>
               </div>

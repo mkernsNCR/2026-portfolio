@@ -53,12 +53,12 @@ body {
   background: transparent;
 }
 
-.theme-fun ::-webkit-scrollbar-thumb {
+.theme-fun::-webkit-scrollbar-thumb {
   background: rgba(255, 255, 255, 0.3);
   border-radius: 3px;
 }
 
-.theme-business ::-webkit-scrollbar-thumb {
+.theme-business::-webkit-scrollbar-thumb {
   background: #d1d5db;
   border-radius: 3px;
 }
