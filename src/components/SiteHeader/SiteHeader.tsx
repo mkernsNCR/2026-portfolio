@@ -29,8 +29,15 @@ function ModeSegment({
     <button
       type="button"
       onClick={() => onSelect(value)}
+      onKeyDown={event => {
+        if (event.key === ' ' || event.key === 'Enter') {
+          event.preventDefault()
+          onSelect(value)
+        }
+      }}
+      role="radio"
+      aria-checked={selected}
       className="relative z-10 flex min-w-[132px] items-center justify-center gap-2 rounded-full px-4 py-2 text-sm font-semibold focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2"
-      aria-pressed={selected}
       aria-label={label}
     >
       <span aria-hidden="true">{emoji}</span>
@@ -124,7 +131,7 @@ export default function SiteHeader() {
                 </span>
               </button>
 
-              <div className={`relative flex rounded-full border p-1 transition-colors duration-300 ${toggleShell}`} role="tablist" aria-label="Portfolio mode selector">
+              <div className={`relative flex rounded-full border p-1 transition-colors duration-300 ${toggleShell}`} role="radiogroup" aria-label="Portfolio mode selector">
                 <motion.div
                   className={`absolute inset-y-1 rounded-full ${isFun ? 'bg-wii-blue shadow-wii' : 'bg-white shadow-sm'}`}
                   animate={{

@@ -74,7 +74,6 @@ function AppContent() {
 
       <AnimatePresence mode="wait">
         <motion.div
-          key={isFun ? 'fun' : 'business'}
           initial={{ opacity: 0 }}
           animate={{ opacity: showIntro && !introComplete ? 0 : 1 }}
           transition={{ duration: 0.6 }}

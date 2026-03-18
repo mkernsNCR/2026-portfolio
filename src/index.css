@@ -26,21 +26,21 @@ body {
 
 /* Theme-specific root styles */
 .theme-fun {
-  font-family: 'Nunito', 'Arial Rounded MT Bold', Arial, sans-serif;
+  font-family: Nunito, 'Arial Rounded MT Bold', Arial, sans-serif;
 }
 
 .theme-business {
-  font-family: 'Inter', system-ui, sans-serif;
+  font-family: Inter, system-ui, sans-serif;
 }
 
 /* Utility classes */
 @layer utilities {
   .font-wii {
-    font-family: 'Nunito', 'Arial Rounded MT Bold', Arial, sans-serif;
+    font-family: Nunito, 'Arial Rounded MT Bold', Arial, sans-serif;
   }
 
   .font-business {
-    font-family: 'Inter', system-ui, sans-serif;
+    font-family: Inter, system-ui, sans-serif;
   }
 }
 

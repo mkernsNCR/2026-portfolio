@@ -461,6 +461,7 @@ function MiniBowlingGame() {
   const [rollCount, setRollCount] = useState(0)
 
   const revealed = Math.min(projects.length, rollCount)
+  const standingPins = projects.length - revealed
 
   return (
     <section className="px-4 py-12 sm:px-6 lg:px-8">
@@ -492,7 +493,11 @@ function MiniBowlingGame() {
                 transition={{ duration: rollCount ? 1.4 : 0.2, ease: 'easeInOut' }}
                 className="absolute bottom-7 left-0 h-12 w-12 rounded-full bg-ball-blue shadow-[0_14px_28px_rgba(27,111,214,0.4)]"
               />
-              <div className="absolute right-10 top-7 grid grid-cols-4 gap-2">
+              <div
+                role="img"
+                aria-label={`Bowling lane pin display showing ${revealed} knocked pins and ${standingPins} standing pins.`}
+                className="absolute right-10 top-7 grid grid-cols-4 gap-2"
+              >
                 {projects.map((project, index) => {
                   const knocked = index < revealed
                   return (
@@ -501,7 +506,7 @@ function MiniBowlingGame() {
                       animate={knocked ? { rotate: index % 2 === 0 ? 35 : -28, y: 22, opacity: 0.35 } : { rotate: 0, y: 0, opacity: 1 }}
                       transition={{ type: 'spring', stiffness: 180, damping: 18 }}
                       className="h-12 w-5 rounded-full bg-white shadow-pin"
-                      aria-label={`${project.title} pin ${knocked ? 'revealed' : 'standing'}`}
+                      aria-hidden="true"
                     />
                   )
                 })}
