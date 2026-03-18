@@ -142,9 +142,9 @@ function IntroCamera({ animating }: { animating: boolean }) {
 // --- Pin positions (triangle formation) ---
 const PIN_POSITIONS: [number, number, number][] = [
   // Row 4 (back)
-  [-0.27, 0, -6.6], [0, 0, -6.6], [0.27, 0, -6.6], [0.135, 0, -6.6],
+  [-0.405, 0, -6.6], [-0.135, 0, -6.6], [0.135, 0, -6.6], [0.405, 0, -6.6],
   // Row 3
-  [-0.135, 0, -6.3], [0.135, 0, -6.3], [0, 0, -6.3],
+  [-0.27, 0, -6.3], [0, 0, -6.3], [0.27, 0, -6.3],
   // Row 2
   [-0.135, 0, -6.0], [0.135, 0, -6.0],
   // Row 1 (front)

@@ -7,7 +7,8 @@ export function scrollToSection(id: string, fallbackOffset = 92) {
   const headerElement = document.getElementById(SITE_HEADER_ID) ?? document.querySelector('header')
   const headerOffset = Math.ceil(headerElement?.getBoundingClientRect().height ?? fallbackOffset)
   const top = Math.max(0, element.getBoundingClientRect().top + window.scrollY - headerOffset)
+  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
 
   window.history.replaceState(null, '', `#${id}`)
-  window.scrollTo({ top, behavior: 'smooth' })
+  window.scrollTo({ top, behavior: prefersReducedMotion ? 'auto' : 'smooth' })
 }
