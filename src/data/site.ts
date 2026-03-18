@@ -1,0 +1,15 @@
+export const siteConfig = {
+  name: 'Matt Kerns',
+  role: 'Full Stack Engineer',
+  location: 'United States',
+  email: '',
+  linkedin: 'https://linkedin.com/in/matthewkerns1/',
+  github: 'https://github.com/mkernsNCR',
+  discord: '',
+  resumeHref: '',
+  summary: 'Building modern web applications, developer tools, and analytics platforms for bowling players and leagues.',
+  headline: 'Designing polished web products, developer tooling, and niche analytics experiences.',
+  seoTitle: 'Matt Kerns | Full Stack Engineer | React, Node.js, AI Systems',
+  seoDescription: 'Matt Kerns is a full stack engineer building modern React applications, developer tools, and bowling analytics platforms.',
+  ogImage: '/bowling.svg',
+}

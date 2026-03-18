@@ -1,0 +1,122 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Base resets */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    transition-delay: 0ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+#root {
+  min-height: 100vh;
+}
+
+/* Theme-specific root styles */
+.theme-fun {
+  font-family: Nunito, 'Arial Rounded MT Bold', Arial, sans-serif;
+}
+
+.theme-business {
+  font-family: Inter, system-ui, sans-serif;
+}
+
+/* Utility classes */
+@layer utilities {
+  .font-wii {
+    font-family: Nunito, 'Arial Rounded MT Bold', Arial, sans-serif;
+  }
+
+  .font-business {
+    font-family: Inter, system-ui, sans-serif;
+  }
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.theme-fun::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 3px;
+}
+
+.theme-business::-webkit-scrollbar-thumb {
+  background: #d1d5db;
+  border-radius: 3px;
+}
+
+/* Focus styles for accessibility */
+:focus-visible {
+  outline: 2px solid;
+  outline-offset: 2px;
+}
+
+.theme-fun :focus-visible {
+  outline-color: rgba(255, 255, 255, 0.8);
+}
+
+.theme-business :focus-visible {
+  outline-color: #374151;
+}
+
+/* Smooth theme transition — targeted selectors only to avoid perf overhead */
+a, button, input, textarea, select,
+nav, footer, section, main,
+[class*="bg-"], [class*="border-"], [class*="text-"] {
+  transition-property: background-color, border-color, color;
+  transition-duration: 300ms;
+  transition-timing-function: ease;
+}
+
+/* Disable transition on elements that manage their own */
+canvas, .no-transition, .no-transition * {
+  transition: none !important;
+}
+
+/* Three.js canvas container fix */
+canvas {
+  display: block !important;
+}
+
+/* Selection */
+.theme-fun ::selection {
+  background: rgba(0, 153, 204, 0.4);
+  color: white;
+}
+
+.theme-business ::selection {
+  background: #e2e8f0;
+  color: #1a202c;
+}
