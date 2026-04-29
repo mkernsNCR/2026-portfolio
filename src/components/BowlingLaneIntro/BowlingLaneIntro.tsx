@@ -164,7 +164,6 @@ export default function BowlingLaneIntro({ onComplete }: BowlingLaneIntroProps) 
   const timeoutsRef = useRef<ReturnType<typeof setTimeout>[]>([])
   const pinDelays = useMemo(
     () => PIN_POSITIONS.map((_, i) => i * 80 + Math.floor(Math.random() * 100)),
-    // eslint-disable-next-line react-hooks/exhaustive-deps
     []
   )
 
