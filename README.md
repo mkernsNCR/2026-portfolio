@@ -25,7 +25,7 @@ npm run type-check   # tsc --noEmit
 
 ## Project structure
 
-```
+```text
 src/
   App.tsx
   main.tsx
