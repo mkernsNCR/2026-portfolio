@@ -1,14 +1,14 @@
 import { useState } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
+import { motion, AnimatePresence, type Variants } from 'framer-motion'
 import { useTheme } from '../../context/ThemeContext'
 import { projects, type Project } from '../../data/projects'
 
-const sectionVariants = {
+const sectionVariants: Variants = {
   hidden: { opacity: 0 },
   visible: { opacity: 1, transition: { staggerChildren: 0.12 } },
 }
 
-const cardVariants = {
+const cardVariants: Variants = {
   hidden: { opacity: 0, y: 40 },
   visible: { opacity: 1, y: 0, transition: { type: 'spring', stiffness: 200, damping: 22 } },
 }
