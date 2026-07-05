@@ -54,10 +54,6 @@ body {
     font-family: 'Space Grotesk', system-ui, sans-serif;
   }
 
-  .font-business {
-    font-family: 'Space Grotesk', system-ui, sans-serif;
-  }
-
   .glow-pink {
     text-shadow: 0 0 8px rgba(255, 46, 136, 0.85), 0 0 28px rgba(255, 46, 136, 0.45), 0 0 72px rgba(255, 46, 136, 0.25);
   }

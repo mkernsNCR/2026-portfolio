@@ -21,19 +21,20 @@ function ActionButton({
   disabled?: boolean
   isFun: boolean
 }) {
-  const className = `${
-    isFun
-      ? variant === 'primary'
-        ? 'border border-neon-pink bg-neon-pink/10 text-neon-pink shadow-neon-pink hover:bg-neon-pink hover:text-void'
-        : variant === 'secondary'
-          ? 'border border-uv-cyan/70 bg-uv-cyan/[0.06] text-uv-cyan hover:bg-uv-cyan hover:text-void'
-          : 'border border-deck-edge bg-deck text-lav hover:border-lav hover:text-white'
-      : variant === 'primary'
-        ? 'border border-ink bg-ink text-paper hover:bg-kegel hover:border-kegel'
-        : variant === 'secondary'
-          ? 'border border-kegel/60 bg-white text-kegel hover:bg-kegel hover:text-white'
-          : 'border border-hairline bg-white text-steel hover:border-steel hover:text-ink'
-  } ${disabled ? 'cursor-not-allowed opacity-[0.55]' : ''} inline-flex items-center justify-center px-5 py-3 font-data text-xs font-semibold uppercase tracking-[0.18em] transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2`
+  const BUTTON_STYLES: Record<'fun' | 'business', Record<'primary' | 'secondary' | 'ghost', string>> = {
+    fun: {
+      primary: 'border border-neon-pink bg-neon-pink/10 text-neon-pink shadow-neon-pink hover:bg-neon-pink hover:text-void',
+      secondary: 'border border-uv-cyan/70 bg-uv-cyan/[0.06] text-uv-cyan hover:bg-uv-cyan hover:text-void',
+      ghost: 'border border-deck-edge bg-deck text-lav hover:border-lav hover:text-white',
+    },
+    business: {
+      primary: 'border border-ink bg-ink text-paper hover:bg-kegel hover:border-kegel',
+      secondary: 'border border-kegel/60 bg-white text-kegel hover:bg-kegel hover:text-white',
+      ghost: 'border border-hairline bg-white text-steel hover:border-steel hover:text-ink',
+    },
+  }
+
+  const className = `${BUTTON_STYLES[isFun ? 'fun' : 'business'][variant]} ${disabled ? 'cursor-not-allowed opacity-[0.55]' : ''} inline-flex items-center justify-center px-5 py-3 font-data text-xs font-semibold uppercase tracking-[0.18em] transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2`
 
   if (href && !disabled) {
     return (
@@ -208,7 +209,7 @@ function ScoreMarkBox({ mark, isFun }: { mark: string; isFun: boolean }) {
           <line x1="27" y1="5" x2="5" y2="27" stroke="currentColor" strokeWidth="2.5" />
         </svg>
       ) : (
-        mark
+        <span aria-hidden="true">{mark}</span>
       )}
       <span className="sr-only">{mark === 'X' ? 'strike' : mark === '/' ? 'spare' : mark}</span>
     </span>

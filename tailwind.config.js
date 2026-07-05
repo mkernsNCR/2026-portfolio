@@ -11,7 +11,6 @@ export default {
         'grotesk': ['Space Grotesk', 'system-ui', 'sans-serif'],
         'data': ['IBM Plex Mono', 'ui-monospace', 'monospace'],
         'wii': ['Space Grotesk', 'system-ui', 'sans-serif'],
-        'business': ['Space Grotesk', 'system-ui', 'sans-serif'],
       },
       colors: {
         'void': '#0A0A18',
