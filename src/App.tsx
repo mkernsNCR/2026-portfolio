@@ -58,7 +58,7 @@ function AppContent() {
     upsertMeta('meta[name="twitter:title"]', { name: 'twitter:title', content: siteConfig.seoTitle })
     upsertMeta('meta[name="twitter:description"]', { name: 'twitter:description', content: siteConfig.seoDescription })
     upsertMeta('meta[name="twitter:image"]', { name: 'twitter:image', content: ogImage })
-    upsertMeta('meta[name="theme-color"]', { name: 'theme-color', content: mode === 'fun' ? '#2563eb' : '#0f172a' })
+    upsertMeta('meta[name="theme-color"]', { name: 'theme-color', content: mode === 'fun' ? '#0A0A18' : '#FAFAF7' })
   }, [mode])
 
   const handleIntroComplete = () => {

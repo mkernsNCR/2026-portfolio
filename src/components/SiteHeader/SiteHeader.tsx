@@ -37,11 +37,11 @@ function ModeSegment({
       }}
       role="radio"
       aria-checked={selected}
-      className="relative z-10 flex min-w-[132px] items-center justify-center gap-2 rounded-full px-4 py-2 text-sm font-semibold focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2"
+      className="relative z-10 flex min-w-[96px] items-center justify-center gap-2 px-3 py-2 font-data text-[11px] font-semibold uppercase tracking-[0.18em] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 sm:min-w-[112px]"
       aria-label={label}
     >
       <span aria-hidden="true">{emoji}</span>
-      <span>{label}</span>
+      <span>{label.replace(' Mode', '')}</span>
     </button>
   )
 }
@@ -96,75 +96,80 @@ export default function SiteHeader() {
 
   const headerShell = isFun
     ? scrolled
-      ? 'border-white/45 bg-slate-950/[0.55] text-white shadow-2xl backdrop-blur-xl'
-      : 'border-white/25 bg-slate-950/[0.35] text-white backdrop-blur-lg'
+      ? 'border-neon-pink/40 bg-void/95 text-white shadow-neon-pink backdrop-blur-xl'
+      : 'border-deck-edge bg-void/80 text-white backdrop-blur-lg'
     : scrolled
-      ? 'border-slate-200/90 bg-white/95 text-slate-900 shadow-lg backdrop-blur-xl'
-      : 'border-slate-200/60 bg-white/80 text-slate-900 shadow-sm backdrop-blur-lg'
+      ? 'border-ink/20 bg-paper/95 text-ink shadow-sheet backdrop-blur-xl'
+      : 'border-hairline bg-paper/90 text-ink backdrop-blur-lg'
 
   const toggleShell = isFun
-    ? 'border-white/20 bg-white/10 text-white'
-    : 'border-slate-200 bg-slate-100 text-slate-700'
+    ? 'border-deck-edge bg-deck text-lav'
+    : 'border-hairline bg-white text-steel'
 
   return (
-    <header id={SITE_HEADER_ID} className="fixed inset-x-0 top-0 z-50 px-4 pt-4 sm:px-6 lg:px-8">
-      <div className="mx-auto max-w-6xl">
-        <div className={`rounded-[28px] border transition-all duration-300 ${headerShell}`}>
-          <div className="flex flex-col gap-4 px-4 py-3 sm:px-5 lg:px-6">
+    <header id={SITE_HEADER_ID} className="fixed inset-x-0 top-0 z-50">
+      <div className={`border-b transition-all duration-300 ${headerShell}`}>
+        <div className="mx-auto max-w-6xl">
+          <div className="flex flex-col gap-3 px-4 py-3 sm:px-6 lg:px-8">
             <div className="flex items-center justify-between gap-4">
               <button
                 type="button"
                 onClick={() => scrollToSection('home')}
-                className="flex items-center gap-3 rounded-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2"
+                className="flex items-center gap-3 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2"
                 aria-label="Go to home section"
               >
-                <span className={`flex h-10 w-10 items-center justify-center rounded-full text-lg ${isFun ? 'bg-white/[0.15]' : 'bg-slate-900 text-white'}`}>
-                  {isFun ? '🎳' : 'MK'}
+                <span className={`flex h-10 w-10 items-center justify-center font-marquee text-xs ${isFun ? 'border border-neon-pink/60 bg-deck text-neon-pink shadow-neon-pink' : 'border border-ink bg-ink text-paper'}`}>
+                  26
                 </span>
                 <span className="text-left">
-                  <span className={`block text-sm font-semibold ${isFun ? 'font-wii text-white' : 'font-business text-slate-900'}`}>
+                  <span className={`block font-marquee text-[13px] leading-tight tracking-wide ${isFun ? 'text-white' : 'text-ink'}`}>
                     Matt Kerns
                   </span>
-                  <span className={`block text-xs ${isFun ? 'font-wii text-white/70' : 'font-business text-slate-500'}`}>
-                    Full Stack Engineer
+                  <span className={`block font-data text-[10px] uppercase tracking-[0.22em] ${isFun ? 'text-uv-cyan' : 'text-kegel'}`}>
+                    {isFun ? 'Lane 26 · Midnight League' : 'Lane 26 · Spec Sheet'}
                   </span>
                 </span>
               </button>
 
-              <div className={`relative flex rounded-full border p-1 transition-colors duration-300 ${toggleShell}`} role="radiogroup" aria-label="Portfolio mode selector">
+              <div className={`relative flex border p-1 transition-colors duration-300 ${toggleShell}`} role="radiogroup" aria-label="Portfolio mode selector">
                 <motion.div
-                  className={`absolute inset-y-1 rounded-full ${isFun ? 'bg-wii-blue shadow-wii' : 'bg-white shadow-sm'}`}
+                  className={`absolute inset-y-1 ${isFun ? 'bg-neon-pink/20 ring-1 ring-neon-pink/70' : 'bg-ink'}`}
                   animate={{
                     x: mode === 'fun' ? 0 : '100%',
                     width: '50%',
                   }}
                   transition={{ type: 'spring', stiffness: 360, damping: 30 }}
                 />
-                <ModeSegment value="fun" current={mode} label="Fun Mode" emoji="🎳" onSelect={setMode} />
-                <ModeSegment value="business" current={mode} label="Business Mode" emoji="💼" onSelect={setMode} />
+                <span className={mode === 'fun' ? 'text-neon-pink' : ''} style={{ display: 'contents' }}>
+                  <ModeSegment value="fun" current={mode} label="Fun Mode" emoji="🎳" onSelect={setMode} />
+                </span>
+                <span className={mode === 'business' ? (isFun ? 'text-white' : 'text-paper') : ''} style={{ display: 'contents' }}>
+                  <ModeSegment value="business" current={mode} label="Business Mode" emoji="💼" onSelect={setMode} />
+                </span>
               </div>
             </div>
 
             <div className="flex items-center justify-between gap-4">
               <nav aria-label="Main navigation" className="hidden md:block">
-                <ul className="flex items-center gap-2">
-                  {navLinks.map(link => {
+                <ul className={`flex items-stretch divide-x border ${isFun ? 'divide-deck-edge border-deck-edge' : 'divide-hairline border-hairline'}`}>
+                  {navLinks.map((link, index) => {
                     const active = activeSection === link.href
                     return (
                       <li key={link.href}>
                         <button
                           type="button"
                           onClick={() => scrollToSection(link.href)}
-                          className={`relative rounded-full px-4 py-2 text-sm transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 ${isFun ? 'font-wii' : 'font-business'} ${active ? isFun ? 'text-white' : 'text-slate-950' : isFun ? 'text-white/70 hover:text-white' : 'text-slate-500 hover:text-slate-900'}`}
+                          className={`relative flex items-center gap-2 px-4 py-2 font-data text-xs uppercase tracking-[0.18em] transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset ${active ? isFun ? 'text-uv-cyan' : 'text-ink' : isFun ? 'text-lav hover:text-white' : 'text-steel hover:text-ink'}`}
                           aria-current={active ? 'page' : undefined}
                         >
                           {active && (
                             <motion.span
                               layoutId="active-nav-indicator"
-                              className={`absolute inset-0 rounded-full ${isFun ? 'bg-white/[0.12]' : 'bg-slate-100'}`}
+                              className={`absolute inset-0 ${isFun ? 'bg-uv-cyan/10 ring-1 ring-inset ring-uv-cyan/50' : 'bg-kegel/[0.07] ring-1 ring-inset ring-kegel/40'}`}
                               transition={{ type: 'spring', stiffness: 420, damping: 34 }}
                             />
                           )}
+                          <span className={`relative z-10 text-[10px] ${active ? isFun ? 'text-neon-pink' : 'text-kegel' : 'opacity-50'}`} aria-hidden="true">{index + 1}</span>
                           <span className="relative z-10">{link.label}</span>
                         </button>
                       </li>
@@ -177,7 +182,7 @@ export default function SiteHeader() {
                 <button
                   type="button"
                   onClick={() => setMobileOpen(open => !open)}
-                  className={`inline-flex items-center rounded-full px-4 py-2 text-sm font-medium transition-colors ${isFun ? 'bg-white/10 font-wii text-white' : 'bg-slate-100 font-business text-slate-800'}`}
+                  className={`inline-flex items-center border px-4 py-2 font-data text-xs uppercase tracking-[0.18em] transition-colors ${isFun ? 'border-deck-edge bg-deck text-white' : 'border-hairline bg-white text-ink'}`}
                   aria-expanded={mobileOpen}
                   aria-label="Toggle navigation menu"
                 >
@@ -185,8 +190,8 @@ export default function SiteHeader() {
                 </button>
               </div>
 
-              <div className={`hidden rounded-full px-4 py-2 text-xs md:block ${isFun ? 'bg-white/10 font-wii text-white/75' : 'bg-slate-100 font-business text-slate-500'}`}>
-                {isFun ? 'Creative mode on lane' : 'Professional mode active'}
+              <div className={`hidden font-data text-[10px] uppercase tracking-[0.24em] md:block ${isFun ? 'text-neon-pink glow-pink' : 'text-steel'}`}>
+                {isFun ? '● Cosmic session in progress' : 'Open play · pro shop hours'}
               </div>
             </div>
 
@@ -211,7 +216,7 @@ export default function SiteHeader() {
                               scrollToSection(link.href)
                               setMobileOpen(false)
                             }}
-                            className={`w-full rounded-2xl px-4 py-3 text-left text-sm transition-colors ${isFun ? 'font-wii text-white' : 'font-business text-slate-800'} ${active ? isFun ? 'bg-white/[0.15]' : 'bg-slate-100' : isFun ? 'bg-white/5' : 'bg-slate-50'}`}
+                            className={`w-full border px-4 py-3 text-left font-data text-xs uppercase tracking-[0.18em] transition-colors ${isFun ? 'text-white' : 'text-ink'} ${active ? isFun ? 'border-uv-cyan/50 bg-uv-cyan/10' : 'border-kegel/40 bg-kegel/[0.06]' : isFun ? 'border-deck-edge bg-deck' : 'border-hairline bg-white'}`}
                           >
                             {link.label}
                           </button>

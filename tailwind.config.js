@@ -7,10 +7,25 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        'wii': ['Nunito', 'Arial Rounded MT Bold', 'Arial', 'sans-serif'],
-        'business': ['Inter', 'system-ui', 'sans-serif'],
+        'marquee': ['Bungee', 'cursive'],
+        'grotesk': ['Space Grotesk', 'system-ui', 'sans-serif'],
+        'data': ['IBM Plex Mono', 'ui-monospace', 'monospace'],
+        'wii': ['Space Grotesk', 'system-ui', 'sans-serif'],
+        'business': ['Space Grotesk', 'system-ui', 'sans-serif'],
       },
       colors: {
+        'void': '#0A0A18',
+        'deck': '#15152E',
+        'deck-edge': '#232345',
+        'neon-pink': '#FF2E88',
+        'uv-cyan': '#00E5FF',
+        'pin-gold': '#FFC53D',
+        'lav': '#A7A9CC',
+        'paper': '#FAFAF7',
+        'ink': '#131B2E',
+        'kegel': '#D62828',
+        'steel': '#5A6072',
+        'hairline': '#E4E4DE',
         'wii-blue': '#0099CC',
         'wii-blue-dark': '#006699',
         'wii-blue-light': '#33BBEE',
@@ -34,6 +49,8 @@ export default {
         'roll': 'roll 1s ease-in forwards',
         'pin-fall': 'pinFall 0.5s ease-in forwards',
         'strike-flash': 'strikeFlash 0.3s ease-in-out 3',
+        'flicker': 'flicker 4.2s linear infinite',
+        'lane-sheen': 'laneSheen 5s ease-in-out infinite',
       },
       keyframes: {
         float: {
@@ -52,6 +69,20 @@ export default {
           '0%, 100%': { opacity: '1' },
           '50%': { opacity: '0.3' },
         },
+        flicker: {
+          '0%, 100%': { opacity: '1' },
+          '3%': { opacity: '0.55' },
+          '6%': { opacity: '1' },
+          '7%': { opacity: '0.4' },
+          '8%': { opacity: '1' },
+          '52%': { opacity: '1' },
+          '53%': { opacity: '0.62' },
+          '54%': { opacity: '1' },
+        },
+        laneSheen: {
+          '0%, 100%': { opacity: '0.25' },
+          '50%': { opacity: '0.7' },
+        },
       },
       backgroundImage: {
         'lane-gradient': 'linear-gradient(180deg, #87CEEB 0%, #B8D4E8 30%, #C8922A 60%, #A0722A 100%)',
@@ -61,6 +92,10 @@ export default {
         'scoreboard': 'linear-gradient(180deg, #1A1A2E 0%, #16213E 100%)',
       },
       boxShadow: {
+        'neon-pink': '0 0 20px rgba(255,46,136,0.45), 0 0 46px rgba(255,46,136,0.18)',
+        'neon-cyan': '0 0 20px rgba(0,229,255,0.4), 0 0 46px rgba(0,229,255,0.16)',
+        'neon-gold': '0 0 18px rgba(255,197,61,0.4)',
+        'sheet': '0 1px 0 rgba(19,27,46,0.06), 0 12px 32px -18px rgba(19,27,46,0.25)',
         'wii': '0 4px 0 rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.3)',
         'wii-hover': '0 6px 0 rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.4)',
         'wii-active': '0 1px 0 rgba(0,0,0,0.3)',
