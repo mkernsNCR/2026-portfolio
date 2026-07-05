@@ -39,21 +39,31 @@ body {
 
 /* Theme-specific root styles */
 .theme-fun {
-  font-family: Nunito, 'Arial Rounded MT Bold', Arial, sans-serif;
+  font-family: 'Space Grotesk', system-ui, sans-serif;
+  background-color: #0A0A18;
 }
 
 .theme-business {
-  font-family: Inter, system-ui, sans-serif;
+  font-family: 'Space Grotesk', system-ui, sans-serif;
+  background-color: #FAFAF7;
 }
 
 /* Utility classes */
 @layer utilities {
   .font-wii {
-    font-family: Nunito, 'Arial Rounded MT Bold', Arial, sans-serif;
+    font-family: 'Space Grotesk', system-ui, sans-serif;
   }
 
-  .font-business {
-    font-family: Inter, system-ui, sans-serif;
+  .glow-pink {
+    text-shadow: 0 0 8px rgba(255, 46, 136, 0.85), 0 0 28px rgba(255, 46, 136, 0.45), 0 0 72px rgba(255, 46, 136, 0.25);
+  }
+
+  .glow-cyan {
+    text-shadow: 0 0 8px rgba(0, 229, 255, 0.8), 0 0 28px rgba(0, 229, 255, 0.4), 0 0 72px rgba(0, 229, 255, 0.22);
+  }
+
+  .glow-gold {
+    text-shadow: 0 0 8px rgba(255, 197, 61, 0.8), 0 0 26px rgba(255, 197, 61, 0.38);
   }
 }
 
@@ -67,12 +77,12 @@ body {
 }
 
 .theme-fun::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.3);
+  background: rgba(255, 46, 136, 0.55);
   border-radius: 3px;
 }
 
 .theme-business::-webkit-scrollbar-thumb {
-  background: #d1d5db;
+  background: #c9c9c1;
   border-radius: 3px;
 }
 
@@ -83,11 +93,11 @@ body {
 }
 
 .theme-fun :focus-visible {
-  outline-color: rgba(255, 255, 255, 0.8);
+  outline-color: #00E5FF;
 }
 
 .theme-business :focus-visible {
-  outline-color: #374151;
+  outline-color: #D62828;
 }
 
 /* Smooth theme transition — targeted selectors only to avoid perf overhead */
@@ -111,11 +121,11 @@ canvas {
 
 /* Selection */
 .theme-fun ::selection {
-  background: rgba(0, 153, 204, 0.4);
+  background: rgba(255, 46, 136, 0.55);
   color: white;
 }
 
 .theme-business ::selection {
-  background: #e2e8f0;
-  color: #1a202c;
+  background: rgba(214, 40, 40, 0.18);
+  color: #131B2E;
 }
