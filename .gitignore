@@ -9,6 +9,7 @@ node_modules/
 # Editor/IDE
 .vscode/
 .idea/
+.windsurf/
 
 # OS
 .DS_Store
@@ -27,3 +28,9 @@ coverage/
 # Framework build directories
 .next/
 build/
+
+# Playwright
+test-results/
+playwright-report/
+blob-report/
+playwright/.cache/

@@ -9,7 +9,7 @@ function Lane() {
   return (
     <group>
       {/* Lane floor */}
-      <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, -0.01, 0]} receiveShadow>
+      <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, -0.01, 0]}>
         <planeGeometry args={[3.6, 20]} />
         <meshStandardMaterial color="#C8922A" roughness={0.4} metalness={0.1} />
       </mesh>
@@ -66,7 +66,7 @@ function BowlingPin({ position, fallen, delay }: {
   return (
     <group ref={meshRef} position={position}>
       {/* Pin body */}
-      <mesh castShadow position={[0, 0.3, 0]}>
+      <mesh position={[0, 0.3, 0]}>
         <cylinderGeometry args={[0.08, 0.12, 0.6, 12]} />
         <meshStandardMaterial color="#F5F5F5" roughness={0.3} />
       </mesh>
@@ -111,7 +111,7 @@ function RollingBall({ rolling, onReachPins }: { rolling: boolean; onReachPins: 
   })
 
   return (
-    <mesh ref={meshRef} position={[0, 0.18, rolling ? zPos.current : 10]} castShadow>
+    <mesh ref={meshRef} position={[0, 0.18, rolling ? zPos.current : 10]}>
       <sphereGeometry args={[0.18, 24, 24]} />
       <meshStandardMaterial color="#1B6FD6" roughness={0.2} metalness={0.1} />
     </mesh>
@@ -200,17 +200,16 @@ export default function BowlingLaneIntro({ onComplete }: BowlingLaneIntroProps) 
         >
           {/* Three.js canvas */}
           <Canvas
-            shadows
             camera={{ position: [0, 1.2, 12], fov: 60 }}
             style={{ width: '100%', height: '100%' }}
+            dpr={[1, 1.5]}
+            gl={{ antialias: false, powerPreference: 'high-performance' }}
             aria-label="Bowling lane intro animation"
           >
             <ambientLight intensity={0.4} />
             <directionalLight
               position={[0, 8, 5]}
               intensity={1.5}
-              castShadow
-              shadow-mapSize={[1024, 1024]}
             />
             <pointLight position={[0, 3, -4]} intensity={1} color="#FFFDE7" />
 

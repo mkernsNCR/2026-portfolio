@@ -1,6 +1,6 @@
 import { useRef } from 'react'
 import { Canvas, useFrame } from '@react-three/fiber'
-import { Sphere, MeshDistortMaterial, Environment, Float } from '@react-three/drei'
+import { Sphere, Float } from '@react-three/drei'
 import * as THREE from 'three'
 
 function BowlingBallMesh({ isFun }: { isFun: boolean }) {
@@ -39,18 +39,6 @@ function BowlingBallMesh({ isFun }: { isFun: boolean }) {
         <meshStandardMaterial color={holeColor} roughness={0.9} />
       </Sphere>
 
-      {/* Specular highlight sphere */}
-      <Sphere args={[1.51, 32, 32]}>
-        <MeshDistortMaterial
-          color={ballColor}
-          transparent
-          opacity={0.15}
-          distort={0.02}
-          speed={2}
-          roughness={0}
-          metalness={0.5}
-        />
-      </Sphere>
     </group>
   )
 }
@@ -71,20 +59,20 @@ export default function BowlingBall3D({ isFun }: BowlingBall3DProps) {
       <Canvas
         camera={{ position: [0, 0, 5], fov: 50 }}
         style={{ width: '100%', height: '100%' }}
+        dpr={[1, 1.5]}
+        gl={{ antialias: false, powerPreference: 'high-performance' }}
         aria-label="3D rotating bowling ball"
         aria-describedby={descId}
       >
-      <ambientLight intensity={0.5} />
-      <directionalLight position={[5, 5, 5]} intensity={1.5} castShadow />
-      <pointLight position={[-5, 3, 2]} intensity={0.8} color={isFun ? '#33BBEE' : '#E2E8F0'} />
-      <pointLight position={[3, -3, 2]} intensity={0.4} color={isFun ? '#FF8833' : '#CBD5E0'} />
+        <ambientLight intensity={0.6} />
+        <directionalLight position={[5, 5, 5]} intensity={1.2} />
+        <pointLight position={[-5, 3, 2]} intensity={0.8} color={isFun ? '#33BBEE' : '#E2E8F0'} />
+        <pointLight position={[3, -3, 2]} intensity={0.4} color={isFun ? '#FF8833' : '#CBD5E0'} />
 
-      <Float speed={2} rotationIntensity={0.3} floatIntensity={0.8}>
-        <BowlingBallMesh isFun={isFun} />
-      </Float>
-
-      <Environment preset={isFun ? 'sunset' : 'studio'} />
-    </Canvas>
+        <Float speed={2} rotationIntensity={0.3} floatIntensity={0.8}>
+          <BowlingBallMesh isFun={isFun} />
+        </Float>
+      </Canvas>
     </>
   )
 }

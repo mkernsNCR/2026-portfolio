@@ -5,12 +5,12 @@ Personal portfolio site for **Matt Kerns**, built with React 19, TypeScript, Vit
 ## Tech stack
 
 - **React** 19 + **react-dom** 19
-- **TypeScript** 5.9
+- **TypeScript** 6.0
 - **Vite** 8 + `@vitejs/plugin-react` 6
 - **Tailwind CSS** 4 (via `@tailwindcss/postcss`)
 - **Framer Motion** 12
-- **Three.js** 0.184 with `@react-three/fiber` 9 and `@react-three/drei` 10
-- **ESLint** 9 (flat config) with `typescript-eslint` 8 and `eslint-plugin-react-hooks` 7
+- **Three.js** 0.185 with `@react-three/fiber` 9 and `@react-three/drei` 10
+- **ESLint** 10 (flat config) with `typescript-eslint` 8 and `eslint-plugin-react-hooks` 7
 
 ## Getting started
 
@@ -63,7 +63,7 @@ export default {
 
 ## ESLint flat config
 
-ESLint 9 requires `eslint.config.js` (flat config). The config wires up
+ESLint 10 requires `eslint.config.js` (flat config). The config wires up
 `typescript-eslint`, `eslint-plugin-react-hooks` v7, and
 `eslint-plugin-react-refresh`. The new react-hooks v7 rules
 (`purity`, `set-state-in-effect`, `refs`, `immutability`, `exhaustive-deps`)

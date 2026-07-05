@@ -1,5 +1,5 @@
 import { useState, useEffect, Suspense, lazy } from 'react'
-import { AnimatePresence, motion } from 'framer-motion'
+import { motion } from 'framer-motion'
 import { ThemeProvider, useTheme } from './context/ThemeContext'
 import SiteHeader from './components/SiteHeader/SiteHeader'
 import PortfolioPage from './pages/PortfolioPage'
@@ -72,16 +72,16 @@ function AppContent() {
         </Suspense>
       )}
 
-      <AnimatePresence mode="wait">
+      {(!showIntro || introComplete) && (
         <motion.div
           initial={{ opacity: 0 }}
-          animate={{ opacity: showIntro && !introComplete ? 0 : 1 }}
+          animate={{ opacity: 1 }}
           transition={{ duration: 0.6 }}
         >
           <SiteHeader />
           <PortfolioPage />
         </motion.div>
-      </AnimatePresence>
+      )}
     </>
   )
 }
