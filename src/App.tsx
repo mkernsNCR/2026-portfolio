@@ -9,7 +9,10 @@ const BowlingLaneIntro = lazy(() => import('./components/BowlingLaneIntro/Bowlin
 
 function AppContent() {
   const { isFun, mode } = useTheme()
-  const [showIntro, setShowIntro] = useState(false)
+  const [showIntro, setShowIntro] = useState(() => {
+    const seen = sessionStorage.getItem('intro-seen')
+    return isFun && !seen
+  })
   const [introComplete, setIntroComplete] = useState(false)
 
   useEffect(() => {
